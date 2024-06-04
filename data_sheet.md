@@ -6,20 +6,18 @@ The data used in this analysis comes from a network meta-analysis of smoking ces
 
 Higgins JP, Jackson D, Barrett JK, Lu G, Ades AE, White IR. Consistency and inconsistency in network meta-analysis: concepts and models for multi-arm studies. Res Synth Methods. 2012 Jun;3(2):98-110. doi: 10.1002/jrsm.1044. PMID: 26062084; PMCID: PMC4433772.
 
-The data was obtained from the CSV file 'smokingcessation.csv' provided as supplementary material with the paper. It contains information from 24 trials comparing different smoking cessation interventions. The columns in the dataset are:
+The data was obtained from Appendix A of the paper: Table A.1 Smoking data set. I copied and pasted it to a csv file, which I called smokingcessation.csv. I include the smokingcessation.csv file. It contains information from 24 trials comparing different smoking cessation interventions. The columns in the dataset are:
 
 - Study: Study identifier 
 - Design: Treatments compared in the study (A = no contact, B = self-help, C = individual counselling, D = group counselling)
 - dA, nA, dB, nB, dC, nC, dD, nD: Number of observed events (d) and total number of participants (n) for each treatment arm
 - hasA, hasB, hasC, hasD: Indicator variables for whether each treatment was included in the study
 
-Some data preprocessing and augmentation was performed in the provided analysis code to handle zero cells and studies where the reference treatment A was not included. The specific steps are:
+Some data preprocessing and imputation was performed in the provided analysis code to handle missing data. The specific steps are:
 
-1. For studies 9 and 20 which had zero events in some arms, 0.5 was added to both the number of events and total participants in all arms. 
+1. MICE (Multivariate Imputation by Chained Equations) was used to impute missing values in the dataset. The `IterativeImputer` from the `sklearn.impute` module was employed for this purpose.
 
-2. For studies that did not include treatment A, the number of events for A was imputed as 0.12 * 0.0001 and the number of participants as 0.0001.
-
-3. Log odds ratios and their variances were then computed comparing each treatment to reference A.
+2. After imputation, the imputed dataset was used for further analysis and modeling.
 
 No other modifications were made to the original data. The full processed dataset used in the analysis is printed in the provided code output.
 
@@ -43,7 +41,7 @@ The data was obtained from the published literature on randomized controlled tri
 
 ## Data Preprocessing
 
-The only preprocessing performed on the raw data was the addition of 0.5 to zero cells and the imputation of a small number of events and participants when the reference treatment A was not included in a study. These adjustments were made to allow computation of log odds ratios. The data is otherwise as extracted from the original trial reports.
+MICE (Multivariate Imputation by Chained Equations) was used to handle missing data in the dataset. The `IterativeImputer` from the `sklearn.impute` module was employed for this purpose. After imputation, the imputed dataset was used for further analysis and modeling. The data is otherwise as extracted from the original trial reports.
 
 ## Ethical Considerations
 
