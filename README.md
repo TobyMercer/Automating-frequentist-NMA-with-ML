@@ -15,7 +15,7 @@ Network meta-analysis is a valuable tool for comparing multiple interventions si
 
 ## Data
 The project utilizes a dataset on smoking cessation interventions, obtained from the following source:
-- Dias, S., Welton, N. J., Sutton, A. J., & Ades, A. E. (2011). NICE DSU technical support document 2: a generalised linear modelling framework for pairwise and network meta-analysis of randomised controlled trials. National Institute for Health and Clinical Excellence, London, UK.
+- Higgins JP, Jackson D, Barrett JK, Lu G, Ades AE, White IR. Consistency and inconsistency in network meta-analysis: concepts and models for multi-arm studies. Res Synth Methods. 2012 Jun;3(2):98-110. doi: [10.1002/jrsm.1044](https://onlinelibrary.wiley.com/doi/10.1002/jrsm.1044). PMID: 26062084; PMCID: PMC4433772.
 
 The dataset includes information on various smoking cessation interventions and their effectiveness in terms of smoking abstinence rates.
 
@@ -36,11 +36,12 @@ The project presents the results of the automated NMA pipeline, including:
 
 ## Usage
 To run the automated NMA pipeline, follow these steps:
-1. Clone the repository: `git clone https://github.com/your-username/your-repository.git`
-2. Install the required dependencies: `pip install -r requirements.txt`
-3. Prepare your dataset in the appropriate format (refer to the data_sheet.md for details).
-4. Run the Jupyter Notebook: `jupyter notebook automated_nma.ipynb`
-5. Follow the instructions in the notebook to execute the automated NMA pipeline.
+1. Clone the repository: `git clone https://github.com/TobyMercer/Automating-frequentist-NMA-with-ML.git`
+2. Navigate to the project directory: `cd Automating-frequentist-NMA-with-ML/`
+3. Install the required dependencies: `pip install -r requirements.txt`
+4. Prepare your dataset in the appropriate format (refer to the data_sheet.md for details).
+5. Run the Jupyter Notebook: `jupyter notebook automated_nma.ipynb`
+6. Follow the instructions in the notebook to execute the automated NMA pipeline.
 
 ## License
 This project is licensed under the Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0) license. You are free to share and adapt the material for non-commercial purposes, as long as you give appropriate credit and indicate if changes were made. For more details, please see the [LICENSE](https://github.com/TobyMercer/Automating-frequentist-NMA-with-ML/blob/main/LICENSE.md) file.
