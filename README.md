@@ -7,11 +7,11 @@ This project aims to streamline the process of conducting frequentist network me
 - [Introduction](#introduction)
 - [Data](#data)
 - [Model](#model)
-- [Hyperparameter Optimisation](#hyperparameter_optimisation)
+- [Hyperparameter Optimisation](#hyperparameter-optimisation)
 - [Results](#results)
 - [Dependencies](#dependencies)
 - [Usage](#usage)
-- [Contact Details](#contact_details)
+- [Contact Details](#contact-details)
 - [Licence](#licence)
 
 ## Introduction
