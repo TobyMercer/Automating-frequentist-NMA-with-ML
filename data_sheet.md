@@ -37,15 +37,15 @@ The trials vary in size from 20 to 2138 participants. 1 trial compared all four 
 
 ## Data Collection Process
 
-The data was obtained from the published literature on randomized controlled trials of smoking cessation interventions. Trials were identified through searches of electronic databases and reference lists of relevant systematic reviews. Data on the number of participants who quit smoking and the total number randomized was extracted for each treatment arm. 
+The data was obtained from the published literature on randomised controlled trials of smoking cessation interventions. Trials were identified through searches of electronic databases and reference lists of relevant systematic reviews. Data on the number of participants who quit smoking and the total number randomised was extracted for each treatment arm. 
 
 ## Data Preprocessing
 
-MICE (Multivariate Imputation by Chained Equations) was used to handle missing data in the dataset. The `IterativeImputer` from the `sklearn.impute` module was employed for this purpose. After imputation, the imputed dataset was used for further analysis and modeling. The data is otherwise as extracted from the original trial reports.
+MICE (Multivariate Imputation by Chained Equations) was used to handle missing data in the dataset. The `IterativeImputer` from the `sklearn.impute` module was employed for this purpose. After imputation, the imputed dataset was used for further analysis and modelling. The data is otherwise as extracted from the original trial reports.
 
 ## Ethical Considerations
 
-The data comes from published randomized controlled trials. The conduct of these trials would have been approved by the relevant institutional ethics boards and informed consent would have been obtained from participants. No individual participant data is included in this dataset.
+The data comes from published randomised controlled trials. The conduct of these trials would have been approved by the relevant institutional ethics boards and informed consent would have been obtained from participants. No individual participant data is included in this dataset.
 
 ## Funding Sources
 
@@ -53,4 +53,15 @@ Not applicable. This dataset makes use of previously published data.
 
 ## Existing Uses of the Dataset
 
-The dataset was used in the research paper cited above to illustrate new statistical methods for network meta-analysis. To the best of my knowledge it has not been used in other publications.
+The smoking cessation dataset has been widely used to demonstrate and compare statistical methods for network meta-analysis across multiple publications and educational settings. Some notable examples include:
+
+1. Lu, G., & Ades, A. E. (2006). Assessing evidence inconsistency in mixed treatment comparisons. Journal of the American Statistical Association, 101(474), 447-459. 
+   - This paper used the smoking cessation dataset to illustrate their proposed Bayesian methods for assessing inconsistency in network meta-analysis.
+
+2. Higgins, J. P. T., Jackson, D., Barrett, J. K., Lu, G., Ades, A. E., & White, I. R. (2012). Consistency and inconsistency in network meta‐analysis: concepts and models for multi‐arm studies. Research Synthesis Methods, 3(2), 98-110.
+   - This paper also used the smoking cessation dataset to discuss and illustrate concepts of consistency and inconsistency in network meta-analysis, particularly in the context of multi-arm trials.
+
+3. Hasselblad, V. (1998). Meta-analysis of multitreatment studies. Medical Decision Making, 18(1), 37-43.
+   - This earlier paper used the smoking cessation data to demonstrate meta-analysis methods for simultaneously comparing multiple treatments.
+
+In addition to these publications, the dataset has been used in various training courses and workshops on network meta-analysis, such as those run by the University of Bristol, further emphasising its role as a standard example dataset in this field. While the examples above provide a good starting point for citations, there are likely additional publications that have utilised this dataset as well.
