@@ -12,7 +12,7 @@ This project aims to streamline the process of conducting frequentist network me
 - [Dependencies](#dependencies)
 - [Usage](#usage)
 - [Contact Details](#contact-details)
-- [Licence](#licence)
+- [License](#license)
 
 ## Introduction
 Network meta-analysis is a valuable tool for comparing multiple interventions simultaneously and providing insights into their relative effectiveness. However, the traditional NMA process can be time-consuming and requires manual effort. This project explores the application of machine learning techniques to automate and streamline the NMA pipeline, making it more efficient and reproducible.
@@ -64,7 +64,9 @@ The results demonstrate the effectiveness of the automated NMA pipeline in compa
 Despite these differences, the overall conclusions regarding the relative effectiveness of the interventions are consistent, with "No contact" being identified as the worst intervention in both analyses. Further investigation using a Bayesian approach and a detailed comparison with the methodology employed in Higgins 2012 would provide a more comprehensive understanding of the ranking differences.
 
 ## Dependencies
-The following dependencies are required to run the code in this project:
+
+### Python Dependencies
+The following Python dependencies are required to run the code in this project:
 
 - Python (version 3.6 or higher)
 - NumPy
@@ -80,9 +82,22 @@ The following dependencies are required to run the code in this project:
 - rpy2
 - PyGAM
 
-To install the dependencies, you can use the following command:
+To install the Python dependencies, you can use the following command:
 
 pip install -r requirements.txt
+
+## R Dependencies
+The following R packages are required to run the code in this project:
+
+- netmeta
+- dplyr
+- ggplot2
+
+To install the R dependencies, you can use the following commands in R:
+
+install.packages("netmeta")
+install.packages("dplyr")
+install.packages("ggplot2")
 
 Additionally, make sure you have the following system dependencies installed:
 
