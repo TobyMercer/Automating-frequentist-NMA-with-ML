@@ -3,12 +3,17 @@
 ## Model Description
 
 **Input:**
-- Study-level data from a network of studies comparing different smoking cessation interventions.
-- Key input features include:
-  - Sample size
-  - Study population demographics
-  - Intervention details (e.g., dose, duration)
-  - Study design (e.g., randomized controlled trial, observational study)
+- Study-level data from 24 trials comparing different smoking cessation interventions, provided in the "smokingcessation.csv" file. The data includes:
+  - Study identifier (Study)
+  - Treatment comparison design (Design)
+  - Number of events (dA, dB, dC, dD) and total number of participants (nA, nB, nC, nD) for each treatment arm (A, B, C, D)
+  - Indicator variables (hasA, hasB, hasC, hasD) denoting which treatments are included in each study
+- The treatments being compared are:
+  - A: No contact
+  - B: Self-help
+  - C: Individual counselling
+  - D: Group counselling
+ - The outcome measure is the number of successful smoking cessation events out of the total number of participants in each treatment arm.
 
 **Output:**
 - Relative treatment effect estimates and 95% credible intervals for each pairwise comparison of smoking cessation interventions.
@@ -30,17 +35,17 @@
   - Mean Squared Error (MSE): 0.0000
   - Mean Absolute Error (MAE): 0.0044 (refer to Cell 16.01)
   - R-squared (R2): 0.9237 (refer to Cell 16.01)
-- Performance is evaluated using cross-validation with different splitting strategies to ensure robustness and generalizability (refer to Cell 15.04).
+- Performance is evaluated using cross-validation with different splitting strategies to ensure robustness and generalisability (refer to Cell 15.04).
 - Model performance is assessed using bootstrap resampling (refer to Cell 16.01).
 - Visualisations:
   - Network diagram showing the network of treatments:
-    ![](https://github.com/TobyMercer/Automating-frequentist-NMA-with-ML/blob/main/images/Cell_3.01.png)
+    ![Network Diagram](https://github.com/TobyMercer/Automating-frequentist-NMA-with-ML/blob/main/images/Cell_3.01.png)
   - Forest plot of relative treatment effect estimates and 95% credible intervals for each pairwise comparison before the NMA:
-    ![](https://github.com/TobyMercer/Automating-frequentist-NMA-with-ML/blob/main/images/Cell_3.02.png)
+    ![Forest plot before NMA](https://github.com/TobyMercer/Automating-frequentist-NMA-with-ML/blob/main/images/Cell_3.02.png)
   - Heatmap of treatment rankings in each study:
-    ![](https://github.com/TobyMercer/Automating-frequentist-NMA-with-ML/blob/main/images/Cell_3.03.png)
+    ![Heatmap of treatment rankings](https://github.com/TobyMercer/Automating-frequentist-NMA-with-ML/blob/main/images/Cell_3.03.png)
   - Forest plot of relative treatment effect estimates and 95% credible intervals for each pairwise comparison after the NMA:
-    ![](https://github.com/TobyMercer/Automating-frequentist-NMA-with-ML/blob/main/images/Cell_20.01.png)
+    ![Forest plot after NMA](https://github.com/TobyMercer/Automating-frequentist-NMA-with-ML/blob/main/images/Cell_20.01.png)
 
 ## Limitations
 
