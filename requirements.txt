@@ -1,0 +1,12 @@
+numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
+networkx
+pymc
+arviz
+graphviz
+tensorflow
+rpy2
+pygam
