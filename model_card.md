@@ -33,10 +33,10 @@
 - Performance is evaluated using cross-validation with different splitting strategies to ensure robustness and generalizability (refer to Cell 15.04).
 - Model performance is assessed using bootstrap resampling (refer to Cell 16.01).
 - Visualisations:
-  - Network diagram showing the comparisons between interventions (refer to the output of Cell 3.01).
-  - Forest plot of relative treatment effect estimates and 95% credible intervals for each pairwise comparison (refer to the output of Cell 3.02 and Cell 20.01).
-  - Heatmap of treatment rankings (refer to the output of Cell 3.03).
-  - Feature importance plot (refer to the output of Cell 16.03).
+  - Network diagram showing the network of treatments (refer to the output of Cell 3.01).
+  - Forest plot of relative treatment effect estimates and 95% credible intervals for each pairwise comparison before the NMA (refer to the output of Cell 3.02).
+  - Heatmap of treatment rankings in each study (refer to the output of Cell 3.03).
+  - Forest plot of relative treatment effect estimates and 95% credible intervals for each pairwise comparison after the NMA (refer to the output of Cell 20.01).
 
 ## Limitations
 
