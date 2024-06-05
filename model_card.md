@@ -308,6 +308,18 @@ Further research and validation, particularly using Bayesian methods, are necess
     ![Heatmap of treatment rankings](https://github.com/TobyMercer/Automating-frequentist-NMA-with-ML/blob/main/images/Cell_3.03.png)
   - Forest plot of relative treatment effect estimates and 95% credible intervals for each pairwise comparison after the NMA:
     ![Forest plot after NMA](https://github.com/TobyMercer/Automating-frequentist-NMA-with-ML/blob/main/images/Cell_20.01.png)
+    
+The forest plot before the network meta-analysis (NMA) shows missing comparisons for some studies, while the forest plot after the NMA is performed has synthesised comparisons for all studies.
+
+The forest plot before the NMA directly visualises the available pairwise comparisons from the original dataset. If a study did not include a particular comparison, it is not shown on the plot for that study. This is why there are gaps in the original forest plot.
+
+On the other hand, the second forest plot is created after performing the NMA using the best machine learning model. The NMA synthesises both direct and indirect evidence from the network of studies to estimate the relative effectiveness of all interventions, even if some comparisons were not directly observed in individual studies.
+
+The NMA model leverages the entire network of evidence to impute missing comparisons and provide estimates for all possible pairwise comparisons. This is one of the key advantages of NMA over traditional pairwise meta-analysis.
+
+So, while the original forest plot shows the raw, incomplete pairwise comparisons from the original data, the forest plot after the NMA presents the synthesised estimates for all comparisons after applying the NMA model. The NMA model fills in the gaps by borrowing strength from indirect evidence and provides a more complete picture of the relative effectiveness of the interventions.
+
+It's important to note that the validity of the synthesised estimates depends on the assumptions of the NMA model, such as transitivity and consistency, and the quality of the input data. Interpreting NMA results requires careful consideration of these assumptions and potential limitations.
 
 ## Limitations
 
