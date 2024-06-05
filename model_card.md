@@ -41,35 +41,241 @@ By integrating ML techniques into the NMA process, this project aims to enhance 
 - Measures of inconsistency and heterogeneity in the network meta-analysis.
 
 **Model Architecture:**
-1. Data Preprocessing:
-   - Missing values in the dataset are replaced with NaN (Not a Number) values.
-   - Relevant columns containing numerical data are converted to float data type.
-   - Rows where all event columns (dA, dB, dC, dD) are NaN are removed.
-2. Feature Engineering:
-   - Treatment effect estimates and confidence intervals are calculated for each study.
-   - Additional features, such as pairwise odds ratios and confidence intervals, are derived from the dataset.
-3. Missing Data Imputation:
-   - Missing values in the engineered features are imputed using the Multiple Imputation by Chained Equations (MICE) technique, implemented through the IterativeImputer class from the scikit-learn library.
-   - The imputation process is performed iteratively for a specified number of iterations (max_iter=10) to fill in missing values based on the observed data.
-4. Data Normalisation:
-   - The imputed features are normalised or standardised using the StandardScaler class from scikit-learn to ensure that all features have zero mean and unit variance.
-5. Model Selection and Hyperparameter Tuning:
-   - Multiple machine learning models, including linear regression, Lasso, Ridge, decision tree, random forest, and gradient boosting, are evaluated using grid search with cross-validation.
-   - The best-performing model is selected based on the lowest cross-validated mean squared error (MSE).
-   - Hyperparameter tuning is performed using grid search to find the optimal hyperparameters for the selected model.
-6. Model Training and Evaluation:
-   - The best-performing model is trained on the entire dataset using the imputed and scaled features.
-   - The trained model's performance is evaluated using various metrics, including mean squared error (MSE), mean absolute error (MAE), and R-squared (R2).
-   - Bootstrap resampling is employed to assess the model's performance and obtain confidence intervals for the evaluation metrics.
-7. Treatment Effect Estimation:
-   - The trained model is used to predict the treatment effects for each study in the dataset.
-   - The predicted treatment effects, along with the observed effects and study information, are stored in a results DataFrame.
-8. Visualisation and Interpretation:
-   - The NMA results are visualised using a forest plot, displaying the predicted treatment effects and their confidence intervals for each study.
-   - Treatment rankings are calculated based on the mean predicted effects and compared with the expected rankings from the Higgins 2012 study.
-   - Inconsistency assessment is performed using the node-splitting approach to evaluate the consistency of the network meta-analysis results.
 
-The architecture of this automated frequentist NMA pipeline combines data preprocessing, feature engineering, missing data imputation, model selection, and evaluation techniques to provide a research-oriented approach for comparing the effectiveness of smoking cessation interventions across multiple studies. However, the results should be interpreted with caution and not used directly for policy-making or healthcare decision-making without further validation and comparison with Bayesian methods, as recommended by the National Institute for Health and Care Excellence (NICE).
+1. Data Preprocessing:
+
+Purpose: The data preprocessing step aims to clean and prepare the input data for analysis. It handles missing values and ensures that the data is in a format suitable for the machine learning algorithms.
+
+Functionality:
+
+- Missing value handling: The pipeline identifies missing values in the dataset and replaces them with NaN (Not a Number) values. This step is crucial for maintaining data integrity and consistency.
+  
+- Data type conversion: Relevant columns containing numerical data, such as the number of events (dA, dB, dC, dD) and total participants (nA, nB, nC, nD), are converted to the float data type. This conversion ensures that the data is properly formatted for mathematical operations and analysis.
+  
+- Removal of incomplete rows: Rows where all event columns (dA, dB, dC, dD) are NaN are removed from the dataset. This step eliminates rows that do not contribute any meaningful information to the analysis.
+
+Code snippet:
+```
+import pandas as pd
+import numpy as np
+
+# Replace '.' with NaN
+data = data.replace('.', np.nan)
+
+# Convert relevant columns to float
+data[['dA', 'nA', 'dB', 'nB', 'dC', 'nC', 'dD', 'nD']] = data[['dA', 'nA', 'dB', 'nB', 'dC', 'nC', 'dD', 'nD']].astype(float)
+
+# Remove rows where all event columns are NaN
+data = data.dropna(subset=['dA', 'dB', 'dC', 'dD'], how='all')
+```
+
+2. Feature Engineering:
+   
+Purpose: The feature engineering step creates new features or variables from the existing data to provide more informative inputs for the machine learning models. These engineered features capture relevant information and relationships that can improve the models' predictive performance.
+
+Functionality:
+
+- Treatment effect estimation: The pipeline calculates treatment effect estimates for each study by computing the proportion of successful events (e.g., dA/nA for treatment A).
+- Confidence interval calculation: Confidence intervals are computed for each treatment effect estimate to quantify the uncertainty associated with the estimates. The confidence intervals are typically calculated using the normal approximation method.
+- Pairwise odds ratios: The pipeline calculates pairwise odds ratios and their corresponding confidence intervals for each treatment comparison within each study. These odds ratios provide a measure of the relative effectiveness of the treatments.
+
+Code snippet:
+```
+# Calculate treatment effect estimates
+data['A_Effect'] = data['dA'] / data['nA']
+data['B_Effect'] = data['dB'] / data['nB']
+data['C_Effect'] = data['dC'] / data['nC']
+data['D_Effect'] = data['dD'] / data['nD']
+
+# Calculate confidence intervals for treatment effect estimates
+data['A_Lower_CI'] = data['A_Effect'] - 1.96 * np.sqrt(1 / data['nA'])
+data['A_Upper_CI'] = data['A_Effect'] + 1.96 * np.sqrt(1 / data['nA'])
+# ... (similar calculations for treatments B, C, and D)
+
+# Calculate pairwise odds ratios and confidence intervals
+data['OR_AB'] = (data['dA'] / (data['nA'] - data['dA'])) / (data['dB'] / (data['nB'] - data['dB']))
+data['OR_AB_Lower_CI'] = np.exp(np.log(data['OR_AB']) - 1.96 * np.sqrt(1 / data['dA'] + 1 / (data['nA'] - data['dA']) + 1 / data['dB'] + 1 / (data['nB'] - data['dB'])))
+data['OR_AB_Upper_CI'] = np.exp(np.log(data['OR_AB']) + 1.96 * np.sqrt(1 / data['dA'] + 1 / (data['nA'] - data['dA']) + 1 / data['dB'] + 1 / (data['nB'] - data['dB'])))
+# ... (similar calculations for other treatment comparisons)
+```
+
+3. Missing Data Imputation:
+   
+Purpose: The missing data imputation step aims to handle missing values in the dataset by estimating and filling in the missing information. This step is crucial for ensuring that the machine learning models can utilise all available data points and avoid biased results due to missing data.
+
+Functionality:
+
+- Multiple Imputation by Chained Equations (MICE): The pipeline employs the MICE technique to impute missing values in the engineered features. MICE is an iterative algorithm that imputes missing values based on the observed data and the relationships between variables.
+- Iterative imputation: The imputation process is performed iteratively for a specified number of iterations (e.g., max_iter=10) to refine the estimates of the missing values. In each iteration, the algorithm imputes missing values based on the current estimates of the other variables.
+- Imputed data generation: The final imputed dataset is generated by combining the observed data with the imputed values. This complete dataset is then used for subsequent steps in the pipeline.
+
+Code snippet:
+```
+from sklearn.experimental import enable_iterative_imputer
+from sklearn.impute import IterativeImputer
+
+# Create an instance of the IterativeImputer
+imputer = IterativeImputer(max_iter=10, random_state=0)
+
+# Perform missing data imputation
+imputed_data = imputer.fit_transform(data)
+```
+4. Data Normalisation:
+   
+Purpose: The data normalization step scales and standardizes the features to ensure that they have similar ranges and distributions. Normalisation helps improve the convergence and performance of many machine learning algorithms.
+
+Functionality:
+
+- Feature scaling: The pipeline applies feature scaling techniques, such as standardization or normalization, to bring all features to a similar scale. Standardization transforms the features to have zero mean and unit variance, while normalization scales the features to a specified range (e.g., [0, 1]).
+- Handling outliers: Normalization techniques can help mitigate the impact of outliers by reducing their influence on the scaled features. This is particularly important for algorithms that are sensitive to the scale of the input features.
+- Improved algorithm performance: Normalized features can lead to faster convergence and better performance of machine learning algorithms, especially those based on gradient descent optimization.
+
+Code snippet:
+```
+from sklearn.preprocessing import StandardScaler
+
+# Create an instance of the StandardScaler
+scaler = StandardScaler()
+
+# Normalize the imputed data
+normalized_data = scaler.fit_transform(imputed_data)
+```
+
+5. Model Selection:
+
+Purpose: The model selection step involves evaluating multiple machine learning models to identify the one that best fits the data and achieves the highest predictive performance. This step ensures that the most suitable model is chosen for the specific NMA task.
+
+Functionality:
+
+- Model comparison: The pipeline compares various machine learning models, such as linear regression, Lasso, Ridge, decision trees, random forests, and gradient boosting. These models are selected based on their ability to handle complex relationships and provide interpretable results.
+- Cross-validation: The pipeline employs cross-validation techniques, such as k-fold cross-validation, to assess the performance of each model. Cross-validation involves splitting the data into multiple subsets, training the model on a subset, and evaluating its performance on the held-out subset. This process is repeated for each subset, and the average performance across all folds is used as a measure of the model's performance.
+- Performance metrics: The pipeline uses appropriate performance metrics, such as mean squared error (MSE) or R-squared (R2), to evaluate the models. These metrics provide a quantitative measure of how well the model fits the data and predicts the target variable.
+- Model selection criteria: The best-performing model is selected based on the chosen performance metric. The model with the lowest MSE or the highest R2 score is typically considered the most suitable for the NMA task.
+
+Code snippet:
+```
+from sklearn.model_selection import GridSearchCV
+from sklearn.linear_model import LinearRegression, Lasso, Ridge
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+
+# Define the models and their corresponding hyperparameters
+models = {
+    'Linear Regression': LinearRegression(),
+    'Lasso': Lasso(),
+    'Ridge': Ridge(),
+    'Decision Tree': DecisionTreeRegressor(),
+    'Random Forest': RandomForestRegressor(),
+    'Gradient Boosting': GradientBoostingRegressor()
+}
+
+# Perform model selection using cross-validation
+best_model = None
+best_score = float('-inf')
+
+for model_name, model in models.items():
+    scores = cross_val_score(model, X, y, cv=5, scoring='neg_mean_squared_error')
+    mean_score = -scores.mean()
+    
+    if mean_score > best_score:
+        best_model = model
+        best_score = mean_score
+```
+
+6. Hyperparameter Tuning:
+
+Purpose: The hyperparameter tuning step involves optimizing the hyperparameters of the selected model to further improve its performance. Hyperparameters are settings that are not learned from the data but are set before training the model. Tuning these hyperparameters can significantly impact the model's performance.
+
+Functionality:
+
+- Hyperparameter search space: The pipeline defines a search space for the hyperparameters of the selected model. This search space specifies the range of values or the set of possible values for each hyperparameter.
+- Grid search or random search: The pipeline employs techniques like grid search or random search to explore different combinations of hyperparameters. Grid search exhaustively evaluates all possible combinations, while random search samples a fixed number of random combinations from the search space.
+- Cross-validation: Hyperparameter tuning is performed using cross-validation to assess the model's performance for each combination of hyperparameters. The combination that yields the best performance is selected as the optimal set of hyperparameters.
+- Final model training: Once the optimal hyperparameters are determined, the final model is trained on the entire dataset using these hyperparameters. This final model is then used for making predictions and generating the NMA results.
+
+Code snippet:
+```
+from sklearn.model_selection import GridSearchCV
+
+# Define the hyperparameter search space
+param_grid = {
+    'C': [0.1, 1, 10],
+    'kernel': ['linear', 'rbf'],
+    'gamma': ['scale', 'auto']
+}
+
+# Perform hyperparameter tuning using grid search
+grid_search = GridSearchCV(best_model, param_grid, cv=5, scoring='neg_mean_squared_error')
+grid_search.fit(X, y)
+
+# Get the best hyperparameters and the tuned model
+best_params = grid_search.best_params_
+tuned_model = grid_search.best_estimator_
+```
+
+7. Model Evaluation:
+
+Purpose: The model evaluation step assesses the performance of the trained model on unseen data to determine its effectiveness and generalizability. It provides insights into how well the model can predict treatment effects and generate reliable NMA results.
+
+Functionality:
+
+- Performance metrics: The pipeline uses various performance metrics to evaluate the model's performance. These metrics may include mean squared error (MSE), mean absolute error (MAE), and R-squared (R2). MSE measures the average squared difference between the predicted and actual values, MAE measures the average absolute difference, and R2 represents the proportion of variance in the target variable that is predictable from the input features.
+- Train-test split: The pipeline splits the data into training and testing sets. The training set is used to train the model, while the testing set is used to evaluate its performance on unseen data. This split helps assess how well the model generalizes to new data.
+- Cross-validation: In addition to the train-test split, the pipeline may employ cross-validation techniques, such as k-fold cross-validation, to obtain a more robust estimate of the model's performance. Cross-validation involves splitting the data into multiple subsets, training and evaluating the model on different combinations of these subsets, and averaging the results.
+- Model performance interpretation: The evaluation results are interpreted to assess the model's performance. Lower values of MSE and MAE indicate better predictive accuracy, while higher values of R2 suggest a better fit to the data. The pipeline may also compare the model's performance to baseline or reference models to determine its relative effectiveness.
+
+Code snippet:
+```
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train the tuned model on the training set
+tuned_model.fit(X_train, y_train)
+
+# Make predictions on the testing set
+y_pred = tuned_model.predict(X_test)
+
+# Evaluate the model's performance
+mse = mean_squared_error(y_test, y_pred)
+mae = mean_absolute_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print(f"Mean Squared Error (MSE): {mse:.4f}")
+print(f"Mean Absolute Error (MAE): {mae:.4f}")
+print(f"R-squared (R2): {r2:.4f}")
+```
+Interpretation:
+
+The model evaluation results provide insights into the model's performance and its ability to generate reliable NMA results. Lower values of MSE and MAE indicate that the model's predictions are close to the actual values, suggesting good predictive accuracy. A high R2 value indicates that a significant proportion of the variance in the target variable can be explained by the model, suggesting a good fit to the data.
+
+However, it is important to interpret the evaluation results in the context of the specific NMA problem and the limitations of the data. The model's performance may be affected by factors such as the quality and representativeness of the input data, the presence of outliers or influential points, and the assumptions made during the modeling process.
+
+The evaluation results should be considered alongside domain knowledge and expert judgment to assess the model's suitability for the NMA task. It is also recommended to compare the model's performance to established benchmarks or reference models in the field to gauge its relative effectiveness.
+
+Summary:
+
+The automated frequentist NMA pipeline presented in this model card combines various machine learning techniques and statistical methods to compare the effectiveness of smoking cessation interventions across multiple studies. The pipeline incorporates the following key components:
+
+1. Data Preprocessing: Handling missing values, converting data types, and removing incomplete rows to ensure data quality and consistency.
+2. Feature Engineering: Creating informative features, such as treatment effect estimates, confidence intervals, and pairwise odds ratios, to capture relevant information for the analysis.
+3. Missing Data Imputation: Employing the Multiple Imputation by Chained Equations (MICE) technique to estimate and fill in missing values, allowing the models to utilize all available data.
+4. Data Normalization: Scaling and standardizing the features to improve the convergence and performance of the machine learning algorithms.
+5. Model Selection: Evaluating multiple machine learning models using cross-validation to identify the best-performing model for the NMA task.
+6. Hyperparameter Tuning: Optimizing the hyperparameters of the selected model to further improve its performance and generalizability.
+7. Model Evaluation: Assessing the trained model's performance using various metrics, such as mean squared error (MSE), mean absolute error (MAE), and R-squared (R2), to determine its effectiveness and reliability.
+8. Treatment Effect Estimation: Utilizing the trained model to predict treatment effects for each study and storing the results along with the observed effects and study information.
+9. Visualization and Interpretation: Visualizing the NMA results using forest plots, calculating treatment rankings, and assessing inconsistency to facilitate understanding and interpretation of the findings.
+
+This automated NMA pipeline provides a research-oriented approach to comparing the effectiveness of smoking cessation interventions, leveraging machine learning techniques to streamline the analysis process and generate insights from the available data. However, it is important to interpret the results with caution and consider the limitations of the frequentist approach.
+
+While this pipeline offers a valuable tool for exploring and automating the NMA process, it should not be used directly for policy-making or healthcare decision-making without further validation and comparison with Bayesian methods. The National Institute for Health and Care Excellence (NICE) recommends using Bayesian approaches for NMA, as they provide a more comprehensive framework for handling uncertainty and incorporating prior knowledge.
+
+Researchers and practitioners should view this automated frequentist NMA pipeline as a complementary tool to traditional methods, providing an efficient and reproducible way to analyze data and generate hypotheses. However, the results should be interpreted in the context of the specific research question, the quality and limitations of the input data, and the underlying assumptions of the models.
+
+Further research and validation, particularly using Bayesian methods, are necessary to establish the robustness and reliability of the automated NMA approach. Collaboration between machine learning experts and domain specialists is crucial to refine the pipeline, incorporate domain knowledge, and ensure the validity and interpretability of the results.
 
 ## Performance
 
