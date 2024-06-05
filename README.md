@@ -38,7 +38,7 @@ The automated NMA pipeline employs a range of machine learning models, including
 
 These models were chosen based on their ability to handle complex relationships between features and target variables, as well as their interpretability and robustness. The pipeline automatically selects the best-performing model based on cross-validation metrics, ensuring optimal results for the given dataset.
 
-**Key Steps In The Automated Pipeline**
+**Key Steps in the Automated Pipeline**
 
 Data Preprocessing:
 
@@ -61,6 +61,24 @@ Model Evaluation:
 After selecting the best model and optimising its hyperparameters, the pipeline evaluates its performance using appropriate metrics. These metrics, such as mean squared error (MSE) or R-squared (R2), measure how well the model predicts the treatment effects compared to the actual observed values. The evaluation step provides insights into the model's accuracy and reliability, helping to assess its usefulness for comparing interventions and supporting decision-making.
 
 By automating these key steps, the pipeline streamlines the network meta-analysis process, reducing manual effort and potential errors. It leverages machine learning techniques to efficiently handle data preprocessing, create informative features, select the best-performing model, optimise hyperparameters, and evaluate the model's performance. This automation enables researchers to focus on interpreting the results and making evidence-based decisions.
+
+**Benefits of Using Machine Learning in Network Meta-Analysis**
+
+Integrating machine learning (ML) techniques into the network meta-analysis (NMA) process offers several key benefits, particularly in terms of improved efficiency and automation:
+
+1. Streamlined Workflow: By automating various steps of the NMA pipeline, such as data preprocessing, feature engineering, and model selection, ML reduces the manual effort required to conduct the analysis. This streamlined workflow allows researchers to focus more on interpreting the results and making evidence-based decisions, rather than spending time on repetitive and time-consuming tasks.
+
+2. Efficient Handling of Large Datasets: ML algorithms are designed to handle large and complex datasets efficiently. As the volume of available studies and data continues to grow, ML techniques enable researchers to process and analyse this information more quickly and effectively. The automated pipeline can easily scale to accommodate larger datasets, ensuring that the analysis remains feasible and manageable.
+
+3. Improved Accuracy and Reliability: ML algorithms are capable of identifying complex patterns and relationships within the data that may be difficult for humans to discern. By leveraging the power of ML, the automated NMA pipeline can potentially improve the accuracy and reliability of treatment effect estimates and rankings. The use of cross-validation and other evaluation techniques helps ensure that the selected model is robust and generalisable.
+   
+4. Reduced Human Bias: Traditional NMA methods often involve manual decisions and judgments, which can introduce human bias into the analysis. By automating the process using ML, the automated NMA pipeline reduces the potential for human bias, ensuring a more objective and data-driven approach. The pipeline applies consistent criteria and algorithms across all studies, minimising the influence of subjective preferences or preconceptions.
+   
+5. Reproducibility and Transparency: The automated NMA pipeline promotes reproducibility and transparency in the analysis process. The pipeline's code and algorithms can be easily shared and replicated, allowing other researchers to validate the results and build upon the work. This transparency enhances the credibility and trustworthiness of the findings, as the analysis steps are clearly documented and can be scrutinised by the scientific community.
+   
+6. Faster Iteration and Refinement: ML techniques enable researchers to quickly iterate and refine the NMA process. The automated pipeline can be easily modified and updated to incorporate new data, models, or techniques. This flexibility allows researchers to adapt to evolving research questions and incorporate the latest advancements in ML and NMA methodologies.
+
+By harnessing the power of ML, the automated NMA pipeline offers significant benefits in terms of efficiency, accuracy, and reproducibility. It streamlines the analysis process, reduces manual effort, and enables researchers to handle large datasets effectively. The use of ML techniques also helps minimise human bias, improves the reliability of the results, and promotes transparency in the scientific process.
 
 ## Hyperparameter Optimisation
 The following hyperparameters were considered for optimisation:
