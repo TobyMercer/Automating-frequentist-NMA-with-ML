@@ -39,7 +39,7 @@ The automated NMA pipeline employs a range of machine learning models, including
 These models were chosen based on their ability to handle complex relationships between features and target variables, as well as their interpretability and robustness. The pipeline automatically selects the best-performing model based on cross-validation metrics, ensuring optimal results for the given dataset.
 
 ## Hyperparameter Optimisation
-The following hyperparameters were considered for optimization:
+The following hyperparameters were considered for optimisation:
 - Regularization strength (alpha) for Lasso, Ridge, and Elastic Net models
 - Maximum depth and minimum samples per leaf for Decision Trees
 - Number of trees, maximum depth, and minimum samples per split for Random Forests
