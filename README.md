@@ -38,6 +38,30 @@ The automated NMA pipeline employs a range of machine learning models, including
 
 These models were chosen based on their ability to handle complex relationships between features and target variables, as well as their interpretability and robustness. The pipeline automatically selects the best-performing model based on cross-validation metrics, ensuring optimal results for the given dataset.
 
+**Key Steps In The Automated Pipeline**
+
+Data Preprocessing:
+
+The first step in the automated pipeline is to prepare the input data for analysis. This involves handling missing values and converting the data into a format that can be easily processed by the machine learning algorithms. The pipeline identifies any missing information and fills in those gaps using a technique called "Multiple Imputation by Chained Equations" (MICE). This method intelligently guesses the missing values based on the available data, ensuring that the dataset is complete and ready for the next steps.
+
+Feature Engineering:
+
+In this step, the pipeline creates new features or variables from the existing data to provide more meaningful information for the analysis. It calculates treatment effect estimates and confidence intervals for each study, which are important indicators of the effectiveness of the interventions being compared. These engineered features help the machine learning algorithms better understand the relationships between the input data and the target variable (treatment effects).
+
+Model Selection:
+
+The pipeline then explores various machine learning models to find the one that best fits the data and predicts the treatment effects accurately. It considers a range of models, including linear regression, decision trees, random forests, and gradient boosting. These models are chosen based on their ability to handle complex relationships and provide interpretable results. The pipeline evaluates each model's performance using a technique called cross-validation, which involves splitting the data into multiple subsets and testing the model's accuracy on each subset. This process helps identify the model that performs the best on unseen data.
+
+Hyperparameter Tuning:
+
+Each machine learning model has settings called hyperparameters that control its behavior and performance. The pipeline optimises these hyperparameters to fine-tune the selected model for the specific dataset. It searches through different combinations of hyperparameters using a technique called grid search, which systematically tries out various settings to find the combination that yields the best results. This step ensures that the chosen model is well-calibrated and performs optimally for the given data.
+
+Model Evaluation:
+
+After selecting the best model and optimising its hyperparameters, the pipeline evaluates its performance using appropriate metrics. These metrics, such as mean squared error (MSE) or R-squared (R2), measure how well the model predicts the treatment effects compared to the actual observed values. The evaluation step provides insights into the model's accuracy and reliability, helping to assess its usefulness for comparing interventions and supporting decision-making.
+
+By automating these key steps, the pipeline streamlines the network meta-analysis process, reducing manual effort and potential errors. It leverages machine learning techniques to efficiently handle data preprocessing, create informative features, select the best-performing model, optimise hyperparameters, and evaluate the model's performance. This automation enables researchers to focus on interpreting the results and making evidence-based decisions.
+
 ## Hyperparameter Optimisation
 The following hyperparameters were considered for optimisation:
 - Regularization strength (alpha) for Lasso, Ridge, and Elastic Net models
