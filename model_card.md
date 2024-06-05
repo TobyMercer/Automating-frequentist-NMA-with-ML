@@ -3,14 +3,23 @@
 ## Model Description
 
 **High Level Overview**
+
 Network meta-analysis (NMA) is a statistical method that allows for the simultaneous comparison of multiple interventions by combining direct and indirect evidence from a network of studies. The traditional NMA process involves several steps, including data extraction, network construction, model specification, parameter estimation, and results interpretation.
+
 In this project, we integrate machine learning (ML) techniques into the NMA process to automate and streamline the analysis. The automated NMA pipeline leverages ML algorithms to perform key tasks, such as data preprocessing, feature engineering, model selection, and evaluation.
+
 The pipeline starts by preprocessing the input data, handling missing values, and converting relevant columns to appropriate data types. It then performs feature engineering to derive additional informative features, such as treatment effect estimates and confidence intervals, from the original dataset.
+
 To address missing data, the pipeline employs the Multiple Imputation by Chained Equations (MICE) technique, which imputes missing values based on the observed data. This step ensures that the dataset is complete and ready for analysis.
-Next, the pipeline utilizes various ML algorithms, including linear regression, decision trees, random forests, and gradient boosting, to model the relationship between the input features and the target variable (treatment effects). These algorithms are chosen based on their ability to handle complex relationships and their interpretability.
+
+Next, the pipeline utilises various ML algorithms, including linear regression, decision trees, random forests, and gradient boosting, to model the relationship between the input features and the target variable (treatment effects). These algorithms are chosen based on their ability to handle complex relationships and their interpretability.
+
 The pipeline performs model selection and hyperparameter tuning using cross-validation and grid search techniques. It evaluates multiple models and their hyperparameter combinations to identify the best-performing model based on specific evaluation metrics, such as mean squared error (MSE) or R-squared (R2).
-Once the best model is selected, it is trained on the entire dataset using the optimized hyperparameters. The trained model is then used to estimate the relative treatment effects and generate treatment rankings for the interventions being compared.
+
+Once the best model is selected, it is trained on the entire dataset using the optimised hyperparameters. The trained model is then used to estimate the relative treatment effects and generate treatment rankings for the interventions being compared.
+
 The automated NMA pipeline streamlines the analysis process by automating data preprocessing, handling missing data, and performing model selection and evaluation. It provides a more efficient and reproducible approach to conducting NMA, reducing manual effort and potential errors.
+
 By integrating ML techniques into the NMA process, this project aims to enhance the efficiency and reliability of treatment comparisons, ultimately supporting evidence-based decision-making in healthcare.
 
 **Input:**
