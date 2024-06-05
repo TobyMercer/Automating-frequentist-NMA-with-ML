@@ -253,7 +253,21 @@ The model evaluation results provide insights into the model's performance and i
 
 However, it is important to interpret the evaluation results in the context of the specific NMA problem and the limitations of the data. The model's performance may be affected by factors such as the quality and representativeness of the input data, the presence of outliers or influential points, and the assumptions made during the modeling process.
 
-The evaluation results should be considered alongside domain knowledge and expert judgment to assess the model's suitability for the NMA task. It is also recommended to compare the model's performance to established benchmarks or reference models in the field to gauge its relative effectiveness.
+8. Treatment Effect Estimation:
+   
+The trained model is used to predict the treatment effects for each study in the dataset. These predicted treatment effects represent the model's estimates of the relative effectiveness of the interventions based on the input features. The predicted treatment effects, along with the observed effects and study information, are stored in a results DataFrame for further analysis and interpretation.
+
+9. Visualization and Interpretation:
+    
+To facilitate understanding and interpretation of the NMA results, several visualization techniques are employed. A forest plot is used to display the predicted treatment effects and their confidence intervals for each study. This plot provides a visual summary of the relative effectiveness of the interventions across studies and allows for easy comparison of the results.
+
+Treatment rankings are calculated based on the mean predicted effects, providing an ordering of the interventions from most effective to least effective. These rankings can be compared with the expected rankings from reference studies, such as Higgins 2012, to assess the consistency and validity of the automated NMA approach.
+
+Inconsistency assessment is performed using the node-splitting approach, which evaluates the consistency of the network meta-analysis results by comparing the direct and indirect evidence for each treatment comparison. This assessment helps identify potential sources of inconsistency in the network and provides insights into the reliability of the NMA findings.
+
+The visualization and interpretation of the NMA results should be done in collaboration with domain experts to ensure that the findings are contextually relevant and aligned with existing knowledge in the field. The results should be interpreted cautiously, considering the limitations of the data and the assumptions made during the modeling process.
+
+It is important to note that while the automated frequentist NMA pipeline provides a valuable tool for exploring and analyzing data, it should not be used as the sole basis for policy-making or healthcare decision-making. Further validation, particularly using Bayesian methods, and comparison with established guidelines and expert judgment are necessary to establish the robustness and reliability of the automated NMA approach.
 
 Summary:
 
