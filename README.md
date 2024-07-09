@@ -96,7 +96,7 @@ The automated NMA pipeline achieved the following results:
 - Best-performing model: Linear Regression
 - Cross-validated performance metrics:
   - Mean Squared Error (MSE): 0.0000
-  - R-squared (R2): 0.9986
+  - R-squared (R2): 0.9237
 - Treatment rankings:
   - Best intervention: Group counseling
   - Worst intervention: No contact
